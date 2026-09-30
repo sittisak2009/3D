@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>วันนี้วันอะไรนะ? - Happy Birthday</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: radial-gradient(circle at center, #1b003a 0%, #080014 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow-x: hidden;
+            color: #ffffff;
+            padding-top: 40px;
+            padding-bottom: 40px;
+        }
+        .card {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(20px);
+            border: 2px solid rgba(255, 105, 180, 0.3);
+            padding: 35px;
+            border-radius: 30px;
+            text-align: center;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8), 0 0 40px rgba(255, 20, 147, 0.4);
+            z-index: 10;
+            max-width: 520px;
+            width: 92%;
+            transition: all 0.4s ease;
+        }
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 15px;
+            color: #ff3399;
+            text-shadow: 0 0 20px rgba(255, 51, 153, 0.9), 0 0 40px rgba(0, 242, 254, 0.5);
+            animation: superGlow 1.5s infinite alternate;
+        }
+        @keyframes superGlow {
+            0% { transform: scale(1); text-shadow: 0 0 15px rgba(255, 51, 153, 0.7); }
+            100% { transform: scale(1.02); text-shadow: 0 0 30px rgba(255, 51, 153, 1), 0 0 50px rgba(0, 242, 254, 0.8); }
+        }
+        p {
+            font-size: 1.1rem;
+            color: #f1f5f9;
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+        .btn-container {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .btn {
+            background: linear-gradient(135deg, #ff1493, #7b1fa2);
+            color: white;
+            border: 2px solid #ff69b4;
+            padding: 14px 28px;
+            font-size: 1.1rem;
+            border-radius: 35px;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0 5px 25px rgba(255, 20, 147, 0.6);
+            text-decoration: none;
+            display: inline-block;
+        }
+        .btn:hover {
+            background: linear-gradient(135deg, #ff69b4, #ff1493);
+            transform: translateY(-4px) scale(1.08);
+            box-shadow: 0 10px 30px rgba(255, 20, 147, 0.9);
+        }
+        .line-btn {
+            background: linear-gradient(135deg, #00b900, #007e00);
+            border-color: #00ff00;
+            box-shadow: 0 5px 25px rgba(0, 185, 0, 0.6);
+            margin-top: 15px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .line-btn:hover {
+            background: linear-gradient(135deg, #00d900, #00b900);
+            box-shadow: 0 10px 30px rgba(0, 185, 0, 0.9);
+        }
+        .next-btn {
+            background: linear-gradient(135deg, #00f2fe, #4facfe);
+            border-color: #00f2fe;
+            box-shadow: 0 5px 25px rgba(0, 242, 254, 0.6);
+            margin-top: 20px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .next-btn:hover {
+            background: linear-gradient(135deg, #4facfe, #00f2fe);
+            box-shadow: 0 10px 30px rgba(0, 242, 254, 0.9);
+        }
+        .hidden {
+            display: none;
+        }
+        
+        /* ช่องกรอกข้อความ */
+        textarea {
+            width: 100%;
+            height: 110px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 2px solid #ff69b4;
+            border-radius: 15px;
+            padding: 12px;
+            color: white;
+            font-size: 1rem;
+            font-family: inherit;
+            resize: none;
+            box-sizing: border-box;
+            margin-bottom: 15px;
+            outline: none;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+        }
+        textarea:focus {
+            border-color: #00f2fe;
+            box-shadow: 0 0 15px rgba(0, 242, 254, 0.5), inset 0 0 10px rgba(0,0,0,0.5);
+        }
+
+        /* กล่องเค้กเริ่มต้นสุดอลัง */
+        .interactive-img-container {
+            margin: 20px auto;
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 5px solid #ff3399;
+            box-shadow: 0 0 35px rgba(255, 51, 153, 0.9), inset 0 0 20px rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.3s;
+            background: radial-gradient(circle, #2a0845, #120024);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: pulseCake 1.5s infinite;
+        }
+        @keyframes pulseCake {
+            0% { transform: scale(1); box-shadow: 0 0 20px rgba(255, 51, 153, 0.6); }
+            50% { transform: scale(1.06); box-shadow: 0 0 45px rgba(255, 51, 153, 1); }
+            100% { transform: scale(1); box-shadow: 0 0 20px rgba(255, 51, 153, 0.6); }
+        }
+        .interactive-img-container:active {
+            transform: scale(0.9);
+        }
+        .cake-emoji {
+            font-size: 85px;
+            line-height: 180px;
+            user-select: none;
+        }
+        .click-hint {
+            font-size: 1rem;
+            color: #ffd700;
+            margin-bottom: 15px;
+            font-weight: bold;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.8);
+        }
+
+        /* รูปภาพเรียงลงมาแบบขนาดใหญ่เต็มตา */
+        .photo-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            margin-top: 15px;
+            margin-bottom: 15px;
+            animation: zoomIn 0.5s ease;
+        }
+        @keyframes zoomIn {
+            from { opacity: 0; transform: scale(0.8); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        .photo-stack img {
+            width: 100%;
+            max-height: 380px;
+            object-fit: cover;
+            border-radius: 15px;
+            border: 4px solid #ff3399;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.7), 0 0 20px rgba(255, 51, 153, 0.5);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ไฟล์เสียงเพลงวันเกิด -->
+    <audio id="bg-music" loop>
+        <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_c8c36b3383.mp3?filename=happy-birthday-to-you-piano-10022.mp3" type="audio/mp3">
+        เบราว์เซอร์ของคุณไม่รองรับเสียงเพลง
+    </audio>
+
+    <!-- หน้าที่ 1: หน้าคำถามหลัก -->
+    <div id="page-home" class="card">
+        <h1>วันนี้วันอะไรนะ? 🤔</h1>
+        <p>ลองเลือกดูสิว่าวันนี้วันสำคัญอะไรกันแน่...</p>
+        <div class="btn-container">
+            <button class="btn" onclick="switchPage('page-wednesday')">วันพุธ</button>
+            <button class="btn" onclick="playMusicAndSwitch('page-birthday')">วันเกิดน้อง 🎉</button>
+        </div>
+    </div>
+
+    <!-- หน้าที่ 2: ถ้ากดวันพุธ -->
+    <div id="page-wednesday" class="card hidden">
+        <h1>อ๋อ จริงด้วย... 😅</h1>
+        <p>วันนี้วันพุธกลางสัปดาห์ธรรมดาๆ แต่ก็ขอให้เป็นวันที่ราบรื่นไม่มีอะไรมากวนใจนะนาย!</p>
+        <button class="btn" onclick="switchPage('page-home')" style="width: 100%; box-sizing: border-box;">← ย้อนกลับไปเลือกใหม่</button>
+    </div>
+
+    <!-- หน้าที่ 3: ถ้ากดวันเกิดน้อง (หน้าเค้กและรูปภาพ) -->
+    <div id="page-birthday" class="card hidden">
+        <h1>🎉 สุขสันต์วันเกิดน้อง! 🎂</h1>
+        <div class="click-hint" id="hint-text">🎂 คลิกที่รูปเค้กครบ 3 ครั้งเพื่อเปิดรูปภาพ! (คลิกแล้ว 0/3)</div>
+        
+        <div id="content-box">
+            <div class="interactive-img-container" onclick="handleCakeClick()">
+                <div class="cake-emoji">🎂</div>
+            </div>
+        </div>
+
+        <p id="birthday-msg" style="font-size: 1rem; margin-top: 15px;">ขอให้ปีนี้เป็นปีที่แฮปปี้สุดๆ มีแต่เรื่องดีๆ เข้ามา สมหวังทุกอย่าง ร่างกายแข็งแรงนะ! ✨</p>
+        
+        <!-- ซ่อนปุ่มถัดไปไว้ก่อน จนกว่าจะกดเค้กครบ 3 ครั้ง -->
+        <div id="next-container" class="hidden">
+            <button class="btn next-btn" onclick="switchPage('page-message')">👉 ถัดไป</button>
+        </div>
+    </div>
+
+    <!-- หน้าที่ 4: หน้าสำหรับฝากข้อความถึงคนทำเว็บ (ถ้ามี) -->
+    <div id="page-message" class="card hidden">
+        <h1>💌 ถึงคนทำเว็บไซต์ 💻</h1>
+        <p>ประทับใจเว็บนี้แค่ไหน หรืออยากฝากข้อความอะไรถึงคนทำเว็บ พิมพ์บอกได้เลยนะ! (ถ้ามี)</p>
+        
+        <textarea id="user-custom-msg" placeholder="พิมพ์ข้อความขอบคุณ หรือความรู้สึกตรงนี้เลย..."></textarea>
+        
+        <button class="btn next-btn" onclick="switchPage('page-done')" style="background: linear-gradient(135deg, #a855f7, #ec4899); border-color: #f472b6; margin-top: 10px;">✨ ข้าม / เสร็จสิ้น</button>
+    </div>
+
+    <!-- หน้าที่ 5: หน้าเสร็จสิ้น -->
+    <div id="page-done" class="card hidden">
+        <h1>🎉 ขอบคุณมากๆ นะ! ✨</h1>
+        <p>ขอให้วันนี้และทุกๆ วันเป็นวันที่ดี มีความสุขมากๆ ยิ้มเยอะๆ นะ! 😊🚀</p>
+        <button class="btn" onclick="switchPage('page-home')" style="width: 100%; box-sizing: border-box;">🏠 กลับสู่หน้าหลัก</button>
+    </div>
+
+    <script>
+        let clickCount = 0;
+        let isUnlocked = false;
+        const music = document.getElementById('bg-music');
+
+        function playMusicAndSwitch(pageId) {
+            music.volume = 0.8;
+            music.play().then(() => {
+                isUnlocked = true;
+            }).catch(err => {
+                console.log("Audio play blocked", err);
+            });
+            switchPage(pageId);
+        }
+
+        function switchPage(pageId) {
+            document.getElementById('page-home').classList.add('hidden');
+            document.getElementById('page-wednesday').classList.add('hidden');
+            document.getElementById('page-birthday').classList.add('hidden');
+            document.getElementById('page-message').classList.add('hidden');
+            document.getElementById('page-done').classList.add('hidden');
+
+            document.getElementById(pageId).classList.remove('hidden');
+
+            if(pageId === 'page-birthday') {
+                clickCount = 0;
+                document.getElementById('hint-text').innerText = "🎂 คลิกที่รูปเค้กครบ 3 ครั้งเพื่อเปิดรูปภาพ! (คลิกแล้ว 0/3)";
+                document.getElementById('next-container').classList.add('hidden');
+                
+                document.getElementById('content-box').innerHTML = `
+                    <div class="interactive-img-container" onclick="handleCakeClick()">
+                        <div class="cake-emoji">🎂</div>
+                    </div>
+                `;
+            }
+        }
+
+        function handleCakeClick() {
+            if (!isUnlocked) {
+                music.play().then(() => { isUnlocked = true; }).catch(e => {});
+            }
+
+            clickCount++;
+
+            if (clickCount < 3) {
+                document.getElementById('hint-text').innerText = `🎂 คลิกที่รูปเค้กครบ 3 ครั้งเพื่อเปิดรูปภาพ! (คลิกแล้ว ${clickCount}/3)`;
+            } else if (clickCount === 3) {
+                document.getElementById('hint-text').innerText = "✨ แท่น แท๊น! รูปภาพสุดอลังการมาแล้ว! 🎉";
+                
+                // แสดงรูปภาพ
+                document.getElementById('content-box').innerHTML = `
+                    <div class="photo-stack">
+                        <img src="FB_IMG_1790730988408.jpg" alt="รูปน้อง 1">
+                        <img src="FB_IMG_1790730995813.jpg" alt="รูปน้อง 2">
+                        <img src="FB_IMG_1790731004624.jpg" alt="รูปน้อง 3">
+                    </div>
+                `;
+                
+                // แสดงปุ่มถัดไป
+                document.getElementById('next-container').classList.remove('hidden');
+            }
+        }
+
+        function sendToLine() {
+            let msg = document.getElementById('user-custom-msg').value.trim();
+            if(!msg) {
+                msg = "ขอบคุณสำหรับเว็บไซต์เซอร์ไพรส์วันเกิดนะ! 🥳🎂";
+            }
+            const encodedMsg = encodeURIComponent(msg);
+            window.open(`https://line.me/R/msg/text/?${encodedMsg}`, '_blank');
+            
+            // หลังจากกดส่งแล้วพาไปหน้าเสร็จสิ้น
+            setTimeout(() => {
+                switchPage('page-done');
+            }, 1000);
+        }
+    </script>
+</body>
+</html>
